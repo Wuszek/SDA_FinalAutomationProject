@@ -9,3 +9,16 @@ Feature: Example
     Given I am on SignIn page
     When I enter my credentials
     Then I am logged on my account
+
+  Scenario: Buy product
+    Given I am on product site
+    When I click on add to cart
+    And Product is added to cart
+    And I click on checkout
+    And I enter my credentials
+    And I accept my address
+    And I accept terms of service
+    And I choose pay by wire
+    And I confirm my order
+    Then I get order confirmation
+

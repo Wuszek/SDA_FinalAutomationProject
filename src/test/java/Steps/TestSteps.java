@@ -1,6 +1,7 @@
 package Steps;
 
 import Base.BaseUtil;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -46,7 +47,7 @@ public class TestSteps extends BaseUtil {
     public void productIsAddedToCart() throws InterruptedException {
         //Assert.assertEquals(true, base.Wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html//div[@id='layer_cart']//i[@class='icon-ok']"))).isDisplayed());
         Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("/html//div[@id='layer_cart']/div[1]/div[1]/h2"),"Product successfully added to your shopping cart"))), true);
-        System.out.println("Test positive");
+        System.out.println("Product added to cart!");
     }
 
     @Given("I am on SignIn page")
@@ -67,5 +68,38 @@ public class TestSteps extends BaseUtil {
     public void iAmLoggedOnMyAccount() {
         Assert.assertEquals(true, base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='center_column']/h1[@class='page-heading']"),"MY ACCOUNT")));
         System.out.println("Login succesfull");
+    }
+
+    @And("I click on checkout")
+    public void iClickOnCheckout() {
+        base.Driver.findElement(By.xpath("/html//div[@id='layer_cart']//a[@title='Proceed to checkout']/span")).click();
+        base.Driver.findElement(By.xpath("//div[@id='center_column']//a[@title='Proceed to checkout']/span")).click();
+    }
+
+    @And("I accept my address")
+    public void iAcceptMyAddress() {
+        base.Driver.findElement(By.xpath("//div[@id='center_column']/form[@action='http://automationpractice.com/index.php?controller=order']//button/span")).click();
+    }
+
+    @And("I accept terms of service")
+    public void iAcceptTermsOfService() {
+        base.Driver.findElement(By.xpath("/html//input[@id='cgv']")).click();
+        base.Driver.findElement(By.xpath("//form[@id='form']//button[@name='processCarrier']/span")).click();
+    }
+
+    @And("I choose pay by wire")
+    public void iChoosePayByWire() {
+        base.Driver.findElement(By.xpath("/html//div[@id='HOOK_PAYMENT']//a[@title='Pay by bank wire']/span[.='(order processing will be longer)']")).click();
+    }
+
+    @And("I confirm my order")
+    public void iConfirmMyOrder() {
+        base.Driver.findElement(By.xpath("//p[@id='cart_navigation']//span")).click();
+    }
+
+    @Then("I get order confirmation")
+    public void iGetOrderConfirmation() {
+        Assert.assertEquals(true, base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("/html//div[@id='center_column']//strong[@class='dark']"),"Your order on My Store is complete.")));
+        System.out.println("Order confirmation is visible!");
     }
 }
