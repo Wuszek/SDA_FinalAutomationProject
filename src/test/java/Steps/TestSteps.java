@@ -7,6 +7,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,18 +19,20 @@ public class TestSteps extends BaseUtil {
         this.base = base;
     }
 
-//    @Given("I am on main site")
-//    public void iAmOnMainSite() throws InterruptedException {
-//        base.Driver.navigate().to("http://automationpractice.com/index.php");
-//        base.Wait.until(ExpectedConditions.urlToBe("http://automationpractice.com/index.php"));
-//
-//        base.Wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#searchbox [name='search_query']")));
-//        base.Driver.findElement(By.cssSelector("input#search_query_top")).sendKeys("Dress");
-//
-//        System.out.println("TEST");
-//
-//        Assert.assertTrue(base.Wait.until(ExpectedConditions.urlContains("/index")));
-//    }
+    @Given("I am on main site")
+    public void iAmOnMainSite() throws InterruptedException {
+        //base.Driver.navigate().to("http://automationpractice.com/index.php");
+        //base.Wait.until(ExpectedConditions.urlToBe("http://automationpractice.com/index.php"));
+
+        //base.Wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#searchbox [name='search_query']")));
+        //base.Driver.findElement(By.cssSelector("input#search_query_top")).sendKeys("Dress");
+
+        //System.out.println("TEST");
+
+        Assert.assertEquals(true, base.Wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='header_logo']//img[@alt='My Store']"))).isDisplayed());
+        System.out.println("I am on main site!");
+
+    }
 
     @Given("I am on product site")
     public void iAmOnProductSite() {
@@ -101,5 +104,21 @@ public class TestSteps extends BaseUtil {
     public void iGetOrderConfirmation() {
         Assert.assertEquals(true, base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("/html//div[@id='center_column']//strong[@class='dark']"),"Your order on My Store is complete.")));
         System.out.println("Order confirmation is visible!");
+    }
+
+    @When("I type {string} in search bar")
+    public void iTypeInSearchBar(String productname) {
+        base.Driver.findElement(By.xpath("/html//input[@id='search_query_top']")).sendKeys(productname);
+    }
+
+    @And("I click ENTER")
+    public void iClickENTER() {
+        base.Driver.findElement(By.xpath("/html//input[@id='search_query_top']")).sendKeys(Keys.ENTER);
+    }
+
+    @Then("Result found shown for {string}")
+    public void resultFoundShownFor(String productname) {
+        Assert.assertEquals(true, base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//span[@class='lighter']\n"),productname.toUpperCase())));
+        System.out.println("Product " + productname + " succesfully searched!");
     }
 }
