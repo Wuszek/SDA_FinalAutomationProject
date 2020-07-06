@@ -6,7 +6,7 @@
 
     <groupId>groupId</groupId>
     <artifactId>project-final-sda</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>4.0-SNAPSHOT</version>
 
     <build>
         <plugins>

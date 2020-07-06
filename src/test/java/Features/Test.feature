@@ -22,11 +22,11 @@ Feature: Example
     And I confirm my order
     Then I get order confirmation
 
-  Scenario: Searching for dress
+  Scenario: Sear  ching for dress
     Given I am on main site
     When I type "Dress" in search bar
     And I click ENTER
-    Then Result found shown for "Dress"
+    Then Result found shown for "Keks"
 
   Scenario: Filling contact form and sending message
     Given I am on main site

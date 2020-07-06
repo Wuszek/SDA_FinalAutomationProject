@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -40,7 +41,6 @@ public class Hook {
         base.Driver.get("http://automationpractice.com/index.php");
 
     }
-
     @After
     public void TearDownTests() {
         base.Driver.quit();

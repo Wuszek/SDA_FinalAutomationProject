@@ -120,7 +120,8 @@ public class TestSteps extends BaseUtil {
 
     @Then("Result found shown for {string}")
     public void resultFoundShownFor(String productname) {
-        Assert.assertEquals(true, base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//span[@class='lighter']\n"),productname.toUpperCase())));
+        Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//span[@class='lighter']\n"),productname.toUpperCase()))), true);
+
         System.out.println("Product " + productname + " succesfully searched!");
     }
 
@@ -157,7 +158,7 @@ public class TestSteps extends BaseUtil {
         if( base.Driver.findElement(By.xpath("/html//input[@id='email']")).getText() != ""
        && base.Driver.findElement(By.xpath("/html//input[@id='id_order']")).getText() != ""
        && base.Driver.findElement(By.xpath("/html//textarea[@id='message']")).getText() != ""
-       && option.equals("1")
+       && "1".equals(option)
        )
        {
            System.out.println("Everything filled! Confirming...");
@@ -170,7 +171,8 @@ public class TestSteps extends BaseUtil {
 
     @Then("Message is sent")
     public void messageIsSent() {
-        Assert.assertEquals(true, base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='center_column']/p[@class='alert alert-success']"), "Your message has been successfully sent to our team.")));
-        System.out.println("Message sent!");
+        Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='center_column']/p[@class='alert alert-success']"),"Benisoida"))), true);
+
+
     }
 }
