@@ -12,6 +12,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: io.cucumber:cucumber-java:5.7.0" level="project" />
     <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.commons:commons-lang3:3.8.1" level="project" />
     <orderEntry type="library" name="Maven: io.cucumber:cucumber-testng:5.7.0" level="project" />
     <orderEntry type="library" name="Maven: org.testng:testng:7.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.beust:jcommander:1.72" level="project" />
@@ -64,5 +65,6 @@
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-devtools:4.0.0-alpha-3" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-http:4.0.0-alpha-3" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-json:4.0.0-alpha-3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: commons-lang:commons-lang:2.5" level="project" />
   </component>
 </module>

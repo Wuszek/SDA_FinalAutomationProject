@@ -1,4 +1,4 @@
-Feature: Example
+Feature: AutomationPractice
 
   Scenario: Add product to basket
     Given I am on product site
@@ -22,11 +22,11 @@ Feature: Example
     And I confirm my order
     Then I get order confirmation
 
-  Scenario: Sear  ching for dress
+  Scenario: Searching for dress
     Given I am on main site
     When I type "Dress" in search bar
     And I click ENTER
-    Then Result found shown for "Keks"
+    Then Result found shown for "Dress"
 
   Scenario: Filling contact form and sending message
     Given I am on main site
@@ -34,3 +34,13 @@ Feature: Example
     And I fill contact form
     And I click Send button
     Then Message is sent
+
+  Scenario: Subscribing for newsletter with unique email address
+    Given I am on main site
+    When I enter unique email address in footer
+    Then I am subscribed to newsletter
+
+  Scenario: Subscribing for newsletter with email address alredy used
+    Given I am on main site
+    When I enter used email address in footer
+    Then I am not subscribed to newsletter

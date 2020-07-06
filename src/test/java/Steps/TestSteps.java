@@ -5,12 +5,10 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
@@ -171,8 +169,45 @@ public class TestSteps extends BaseUtil {
 
     @Then("Message is sent")
     public void messageIsSent() {
-        Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='center_column']/p[@class='alert alert-success']"),"Benisoida"))), true);
+        Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='center_column']/p[@class='alert alert-success']"),"Your message has been successfully sent to our team."))), true);
+    }
+
+    @When("I enter unique email address in footer")
+    public void iEnterUniqueEmailAddressInFooter() {
+
+        String generatedPrefix = RandomStringUtils.randomAlphabetic(10);
+        String generatedSuffix = RandomStringUtils.randomAlphabetic(3);
+        String email = generatedPrefix + "@" + generatedSuffix + ".com";
+        //String email = "test@testowisko.pl";
+
+        Assert.assertTrue((base.Driver.findElement(By.xpath("/html//input[@id='newsletter-input']"))).isDisplayed());
 
 
+        base.Driver.findElement(By.xpath("/html//input[@id='newsletter-input']")).sendKeys(email);
+        base.Driver.findElement(By.xpath("//div[@id='newsletter_block_left']//form[@action='http://automationpractice.com/index.php']//button[@name='submitNewsletter']")).click();
+
+    }
+
+    @Then("I am subscribed to newsletter")
+    public void iAmSubscribedToNewsletter() {
+
+        Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='columns']/p[@class='alert alert-success']"), "Newsletter : You have successfully subscribed to this newsletter."))), true);
+        System.out.println("Subscribed to newsletter!");
+    }
+
+    @When("I enter used email address in footer")
+    public void iEnterUsedEmailAddressInFooter() {
+        String email = "test@testowisko.pl";
+
+        Assert.assertTrue((base.Driver.findElement(By.xpath("/html//input[@id='newsletter-input']"))).isDisplayed());
+
+        base.Driver.findElement(By.xpath("/html//input[@id='newsletter-input']")).sendKeys(email);
+        base.Driver.findElement(By.xpath("//div[@id='newsletter_block_left']//form[@action='http://automationpractice.com/index.php']//button[@name='submitNewsletter']")).click();
+    }
+
+    @Then("I am not subscribed to newsletter")
+    public void iAmNotSubscribedToNewsletter() {
+        Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='columns']/p[@class='alert alert-danger']"), "Newsletter : This email address is already registered."))), true);
+        System.out.println("NOT subscribed to newsletter!");
     }
 }
