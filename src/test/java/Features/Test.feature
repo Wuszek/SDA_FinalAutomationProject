@@ -27,3 +27,10 @@ Feature: Example
     When I type "Dress" in search bar
     And I click ENTER
     Then Result found shown for "Dress"
+
+  Scenario: Filling contact form and sending message
+    Given I am on main site
+    When I click on Contact Us button
+    And I fill contact form
+    And I click Send button
+    Then Message is sent

@@ -8,9 +8,11 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 
 public class TestSteps extends BaseUtil {
     private BaseUtil base;
@@ -120,5 +122,55 @@ public class TestSteps extends BaseUtil {
     public void resultFoundShownFor(String productname) {
         Assert.assertEquals(true, base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//span[@class='lighter']\n"),productname.toUpperCase())));
         System.out.println("Product " + productname + " succesfully searched!");
+    }
+
+    @When("I click on Contact Us button")
+    public void iClickOnContactUsButton() {
+        base.Driver.findElement(By.xpath("//div[@id='contact-link']/a[@title='Contact Us']")).click();
+        Assert.assertEquals(true, base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='center_column']/h1[1]"), "CUSTOMER SERVICE - CONTACT US")));
+        System.out.println("I can see contact form!");
+    }
+
+    @And("I fill contact form")
+    public void iFillContactForm() {
+        Select SubjectDropdown = new Select(base.Driver.findElement(By.xpath("/html//select[@id='id_contact']")));
+
+        String option_d = SubjectDropdown.getFirstSelectedOption().getAttribute("value");
+        System.out.println("Check first selected option (no value selected yet): " + option_d);
+
+        SubjectDropdown.selectByValue("1");
+        String option = SubjectDropdown.getFirstSelectedOption().getAttribute("value");
+        System.out.println("Check first selected option (selected value = 1): " + option);
+
+        base.Driver.findElement(By.xpath("/html//input[@id='email']")).sendKeys("test@testowisko.pl");
+        base.Driver.findElement(By.xpath("/html//input[@id='id_order']")).sendKeys("QWERTY1");
+        base.Driver.findElement(By.xpath("/html//textarea[@id='message']")).sendKeys("Test message");
+    }
+
+    @And("I click Send button")
+    public void iClickSendButton() {
+        Select SubjectDropdown = new Select(base.Driver.findElement(By.xpath("/html//select[@id='id_contact']")));
+        String option = SubjectDropdown.getFirstSelectedOption().getAttribute("value");
+
+        System.out.println("Check first selected option: " + option);
+
+        if( base.Driver.findElement(By.xpath("/html//input[@id='email']")).getText() != ""
+       && base.Driver.findElement(By.xpath("/html//input[@id='id_order']")).getText() != ""
+       && base.Driver.findElement(By.xpath("/html//textarea[@id='message']")).getText() != ""
+       && option.equals("1")
+       )
+       {
+           System.out.println("Everything filled! Confirming...");
+           base.Driver.findElement(By.xpath("//button[@id='submitMessage']/span")).click();
+       } else {
+           System.out.println("Something is not filled up!");
+       }
+
+    }
+
+    @Then("Message is sent")
+    public void messageIsSent() {
+        Assert.assertEquals(true, base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='center_column']/p[@class='alert alert-success']"), "Your message has been successfully sent to our team.")));
+        System.out.println("Message sent!");
     }
 }

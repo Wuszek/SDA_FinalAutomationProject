@@ -34,9 +34,9 @@ public class Hook {
         //System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 
         base.Driver = new ChromeDriver();
-        base.Wait = new WebDriverWait(base.Driver, 30);
+        base.Wait = new WebDriverWait(base.Driver, 5);
         base.Driver.manage().window().maximize();
-        PageFactory.initElements(new AjaxElementLocatorFactory(base.Driver,10), base);
+        PageFactory.initElements(new AjaxElementLocatorFactory(base.Driver,5), base);
         base.Driver.get("http://automationpractice.com/index.php");
 
     }
