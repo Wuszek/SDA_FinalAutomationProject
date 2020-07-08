@@ -1,16 +1,17 @@
 package Steps;
 
 import Base.BaseUtil;
+import io.cucumber.core.internal.gherkin.deps.com.google.gson.annotations.Until;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 
 public class TestSteps extends BaseUtil {
     private BaseUtil base;
@@ -118,7 +119,107 @@ public class TestSteps extends BaseUtil {
 
     @Then("Result found shown for {string}")
     public void resultFoundShownFor(String productname) {
-        Assert.assertEquals(true, base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//span[@class='lighter']\n"),productname.toUpperCase())));
+        Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//span[@class='lighter']\n"),productname.toUpperCase()))), true);
+
         System.out.println("Product " + productname + " succesfully searched!");
+    }
+
+    @When("I click on Contact Us button")
+    public void iClickOnContactUsButton() {
+        base.Driver.findElement(By.xpath("//div[@id='contact-link']/a[@title='Contact Us']")).click();
+        Assert.assertEquals(true, base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='center_column']/h1[1]"), "CUSTOMER SERVICE - CONTACT US")));
+        System.out.println("I can see contact form!");
+    }
+
+    @And("I fill contact form")
+    public void iFillContactForm() {
+        Select SubjectDropdown = new Select(base.Driver.findElement(By.xpath("/html//select[@id='id_contact']")));
+
+        String option_d = SubjectDropdown.getFirstSelectedOption().getAttribute("value");
+        System.out.println("Check first selected option (no value selected yet): " + option_d);
+
+        SubjectDropdown.selectByValue("1");
+        String option = SubjectDropdown.getFirstSelectedOption().getAttribute("value");
+        System.out.println("Check first selected option (selected value = 1): " + option);
+
+        base.Driver.findElement(By.xpath("/html//input[@id='email']")).sendKeys("test@testowisko.pl");
+        base.Driver.findElement(By.xpath("/html//input[@id='id_order']")).sendKeys("QWERTY1");
+        base.Driver.findElement(By.xpath("/html//textarea[@id='message']")).sendKeys("Test message");
+    }
+
+    @And("I click Send button")
+    public void iClickSendButton() {
+        Select SubjectDropdown = new Select(base.Driver.findElement(By.xpath("/html//select[@id='id_contact']")));
+        String option = SubjectDropdown.getFirstSelectedOption().getAttribute("value");
+
+        System.out.println("Check first selected option: " + option);
+
+        if( base.Driver.findElement(By.xpath("/html//input[@id='email']")).getText() != ""
+       && base.Driver.findElement(By.xpath("/html//input[@id='id_order']")).getText() != ""
+       && base.Driver.findElement(By.xpath("/html//textarea[@id='message']")).getText() != ""
+       && "1".equals(option)
+       )
+       {
+           System.out.println("Everything filled! Confirming...");
+           base.Driver.findElement(By.xpath("//button[@id='submitMessage']/span")).click();
+       } else {
+           System.out.println("Something is not filled up!");
+       }
+
+    }
+
+    @Then("Message is sent")
+    public void messageIsSent() {
+        Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='center_column']/p[@class='alert alert-success']"),"Your message has been successfully sent to our team."))), true);
+    }
+
+    @When("I enter unique email address in footer")
+    public void iEnterUniqueEmailAddressInFooter() {
+
+        String generatedPrefix = RandomStringUtils.randomAlphabetic(10);
+        String generatedSuffix = RandomStringUtils.randomAlphabetic(3);
+        String email = generatedPrefix + "@" + generatedSuffix + ".com";
+        //String email = "test@testowisko.pl";
+
+        Assert.assertTrue((base.Driver.findElement(By.xpath("/html//input[@id='newsletter-input']"))).isDisplayed());
+
+
+        base.Driver.findElement(By.xpath("/html//input[@id='newsletter-input']")).sendKeys(email);
+        base.Driver.findElement(By.xpath("//div[@id='newsletter_block_left']//form[@action='http://automationpractice.com/index.php']//button[@name='submitNewsletter']")).click();
+
+    }
+
+    @Then("I am subscribed to newsletter")
+    public void iAmSubscribedToNewsletter() {
+
+        Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='columns']/p[@class='alert alert-success']"), "Newsletter : You have successfully subscribed to this newsletter."))), true);
+        System.out.println("Subscribed to newsletter!");
+    }
+
+    @When("I enter used email address in footer")
+    public void iEnterUsedEmailAddressInFooter() {
+        String email = "test@testowisko.pl";
+
+        Assert.assertTrue((base.Driver.findElement(By.xpath("/html//input[@id='newsletter-input']"))).isDisplayed());
+
+        base.Driver.findElement(By.xpath("/html//input[@id='newsletter-input']")).sendKeys(email);
+        base.Driver.findElement(By.xpath("//div[@id='newsletter_block_left']//form[@action='http://automationpractice.com/index.php']//button[@name='submitNewsletter']")).click();
+    }
+
+    @Then("I am not subscribed to newsletter")
+    public void iAmNotSubscribedToNewsletter() {
+        Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='columns']/p[@class='alert alert-danger']"), "Newsletter : This email address is already registered."))), true);
+        System.out.println("NOT subscribed to newsletter!");
+    }
+
+    @When("I enter basket")
+    public void iEnterBasket() {
+        base.Driver.findElement(By.xpath("/html//header[@id='header']/div[3]/div[@class='container']//a[@title='View my shopping cart']/b[.='Cart']")).click();
+        Assert.assertEquals(base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("/html//h1[@id='cart_title']"), "SHOPPING-CART SUMMARY")), true);
+    }
+
+    @Then("Basket is empty")
+    public void basketIsEmpty() {
+        Assert.assertEquals(base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='center_column']/p[@class='alert alert-warning']"), "Your shopping cart is empty.")), true);
     }
 }
