@@ -44,3 +44,8 @@ Feature: AutomationPractice
     Given I am on main site
     When I enter used email address in footer
     Then I am not subscribed to newsletter
+
+   Scenario: Basket is empty when no product added
+     Given I am on main site
+     When I enter basket
+     Then Basket is empty

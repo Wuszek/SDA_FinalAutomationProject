@@ -1,6 +1,7 @@
 package Steps;
 
 import Base.BaseUtil;
+import io.cucumber.core.internal.gherkin.deps.com.google.gson.annotations.Until;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -209,5 +210,16 @@ public class TestSteps extends BaseUtil {
     public void iAmNotSubscribedToNewsletter() {
         Assert.assertEquals((base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='columns']/p[@class='alert alert-danger']"), "Newsletter : This email address is already registered."))), true);
         System.out.println("NOT subscribed to newsletter!");
+    }
+
+    @When("I enter basket")
+    public void iEnterBasket() {
+        base.Driver.findElement(By.xpath("/html//header[@id='header']/div[3]/div[@class='container']//a[@title='View my shopping cart']/b[.='Cart']")).click();
+        Assert.assertEquals(base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("/html//h1[@id='cart_title']"), "SHOPPING-CART SUMMARY")), true);
+    }
+
+    @Then("Basket is empty")
+    public void basketIsEmpty() {
+        Assert.assertEquals(base.Wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='center_column']/p[@class='alert alert-warning']"), "Your shopping cart is empty.")), true);
     }
 }
