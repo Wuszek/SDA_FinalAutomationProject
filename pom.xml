@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>groupId</groupId>
-    <artifactId>project-final-sda</artifactId>
+    <artifactId>SDA_FinalProject</artifactId>
     <version>4.0-SNAPSHOT</version>
 
     <build>
