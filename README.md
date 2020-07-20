@@ -1,6 +1,6 @@
 # SDA Final Project - test automation 
 
-![Build Status](https://travis-ci.com/Wuszek/MP3Player.svg?token=qwXjy3hJBFKyzysCpz3i&branch=develop)
+![Build Status](https://travis-ci.com/Wuszek/SDA_FinalProject.svg?token=qwXjy3hJBFKyzysCpz3i&branch=develop)
 
 Part of final SDA project, including website testing automation. 
 
@@ -33,5 +33,4 @@ Part of final SDA project, including website testing automation.
   
 ## Here is linked full tests recording  
 
-  ###### All tests recording
   [Full recording - click to watch (12.6MB)](https://gifyu.com/image/Wbkt)  
