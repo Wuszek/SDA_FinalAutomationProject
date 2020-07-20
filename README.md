@@ -10,25 +10,27 @@ Part of final SDA project, including website testing automation.
 * [Screenshots](#screenshots)
 
 ## What am I for?
-  - Simple MP3 player based on jaco-mp3 library 
-  - Working playing in loop, Start, Stop, Pause, Play Next/Last, Volume, Mute and Full Volume buttons,
-  - When adding new file it appears on playlist, can play file from playlist by doubleclick
+  - Automated tests for site [Automationpractice.com](http://automationpractice.com/)
+  - Written in Gherkin and Cucumber
+  - Test scenarios
+  - Using Chromedriver
+  - Using assertions to check if test passes
 
   
 ## Built With
-###### Tests
+##### Tests
    - [Cucumber](https://cucumber.io/) - IntelliJ plugin
    - [Gherkin](https://cucumber.io/docs/gherkin/) - IntelliJ plugin
 
 ## GIFs showing choosen tests  
   
-  ###### Buying a product
+  ##### Buying a product
   ![buy_item.gif](https://s7.gifyu.com/images/buy_item.gif)
      
-  ###### Login to user account  
+  ##### Login to user account  
   ![login_to_user-account.gif](https://s7.gifyu.com/images/login_to_user-account.gif)
   
-  ###### Subscribe to newsletter  
+  ##### Subscribe to newsletter  
   ![subscribe_to_newsletter.gif](https://s7.gifyu.com/images/subscribe_to_newsletter.gif)
   
 ## Here is linked full tests recording  
